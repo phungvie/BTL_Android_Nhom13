@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view_layout_item_home"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    android:layout_marginEnd="10dp"
+    >
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/img_view_playlist_home_item"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/images" />
+
+    <TextView
+        android:id="@+id/text_name_playlist_home_item"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="16sp"
+        android:text="Tên danh sách phát" />
+
+    <TextView
+        android:id="@+id/text_category_playlist_home_item"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:textColor="@color/material_on_surface_disabled"
+        android:text=" Thể loại" />
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+

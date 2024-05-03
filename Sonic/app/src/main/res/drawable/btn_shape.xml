@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="100dp" /> <!-- Điều này sẽ tạo ra góc bo cong với bán kính 10dp -->
+    <solid android:color="#00FF4081" /> <!-- Màu nền của button -->
+    <stroke
+        android:width="1dp"
+        android:color="@color/white" />
+</shape>

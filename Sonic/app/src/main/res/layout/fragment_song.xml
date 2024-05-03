@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp">
+
+        <ImageView
+            android:id="@+id/imageViewSong"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/images" />
+    </androidx.cardview.widget.CardView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <ImageButton
+            android:id="@+id/img_skip_next_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/card_view_play_or_pause_song"
+            android:backgroundTint="@color/viet0"
+            android:padding="15dp"
+            android:stateListAnimator="@drawable/btn"
+            android:src="@drawable/ic_skip_next_40" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_play_or_pause_song"
+            app:cardCornerRadius="40dp"
+            android:backgroundTint="@color/white"
+            android:layout_toRightOf="@+id/img_skip_previous_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/img_play_or_pause_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:padding="20dp"
+            android:stateListAnimator="@drawable/btn"
+            android:src="@drawable/ic_play_40" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/img_skip_previous_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:stateListAnimator="@drawable/btn"
+            android:backgroundTint="@color/viet0"
+            android:src="@drawable/ic_skip_previous_40" />
+
+
+    </RelativeLayout>
+</LinearLayout>

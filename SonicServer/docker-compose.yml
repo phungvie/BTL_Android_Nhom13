@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=sonic
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./sqlSonic.sql:/docker-entrypoint-initdb.d/init.sql
+  web:
+    image: sonic-server:latest
+    ports:
+      - "8005:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
+
