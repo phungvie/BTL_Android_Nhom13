@@ -76,10 +76,10 @@ public class securityController {
 
 	}
 	
-//	@GetMapping("/user")
-//	public ResponseEntity<?> user(@AuthenticationPrincipal OAuth2User principal) {
-//		return ResponseEntity.ok().body( Collections.singletonMap("name", principal.getAttribute("name")));
-//	}
+	@GetMapping("/user")
+	public ResponseEntity<?> user(@AuthenticationPrincipal OAuth2User principal) {
+		return ResponseEntity.ok().body( Collections.singletonMap("name", principal.getAttribute("name")));
+	}
 
 
 	@GetMapping("/getUser")
@@ -125,5 +125,7 @@ public class securityController {
 
 		}
 	}
+	
+
 
 }
