@@ -1,3 +1,13 @@
+header {
+  background-color: rgb(37, 37, 37);
+  padding: 1rem;
+}
+header>h1{
+    color: white;
+}
+
+
+/* 
 .App {
   text-align: center;
 }
@@ -35,4 +45,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

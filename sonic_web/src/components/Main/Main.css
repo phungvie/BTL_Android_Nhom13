@@ -1,0 +1,19 @@
+main {
+  background-image: linear-gradient(to bottom, hwb(0 0% 100% / 0.75), #000000);
+  background-repeat: no-repeat;
+}
+
+.btn-custom {
+  color: white ;
+  border-radius: 50px
+  
+}
+.btn-custom:hover {
+  background-color: unset ;
+  border-color: white ;
+}
+.btn-custom >img{
+   width: 1.25rem;
+   height: 1.25rem;
+   
+  }
