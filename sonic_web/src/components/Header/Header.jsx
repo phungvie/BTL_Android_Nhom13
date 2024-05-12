@@ -1,7 +1,7 @@
 
 function Header() {
   return (
-    <header>
+    <header className="bg-black">
       <h1>Sonic web</h1>
     </header>
   );

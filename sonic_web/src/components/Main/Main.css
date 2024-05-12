@@ -1,9 +1,10 @@
-main {
+body {
   background-image: linear-gradient(to bottom, hwb(0 0% 100% / 0.75), #000000);
   background-repeat: no-repeat;
 }
 
 .btn-custom {
+  background-color: unset;
   color: white ;
   border-radius: 50px
   
@@ -15,5 +16,9 @@ main {
 .btn-custom >img{
    width: 1.25rem;
    height: 1.25rem;
-   
+   position: relative;
+   bottom: .1rem;
+  }
+  .rounded{
+    box-shadow: 0 0 10px #7777; /* Đây là định nghĩa cho bóng */
   }
