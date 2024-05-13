@@ -9,6 +9,7 @@ import org.springframework.security.authentication.RememberMeAuthenticationProvi
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jakarta.transaction.Transactional;
 import viet.spring.SonicServer.entity.Role;
@@ -104,38 +110,36 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter)
 			throws Exception {
+
 		http
-		.csrf(c -> c
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-			)
-		.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers(
-						"/sonic/lib/**",
-						"/security/getUser",
-						"/sonic/user/**").hasAnyRole("USER","ADMIN")//có một trong số các quyền
-				.requestMatchers(
-						"/sonic/amdin/**").hasRole("ADMIN")//chỉ có quyền admin mơi được thực hiện
-
-				.anyRequest().permitAll())
-		.oauth2Login(Customizer.withDefaults())
-		.formLogin(Customizer.withDefaults())
-//		.logout(l -> l
-//				.logoutSuccessUrl("/").permitAll()
+//		.csrf(c -> c
+//				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //			)
+				.csrf(t -> t.disable()).cors(Customizer.withDefaults())
+				.authorizeHttpRequests(
+						authorize -> authorize.requestMatchers("/sonic/lib/**", "/security/getUser", "/sonic/user/**")
+								.hasAnyRole("USER", "ADMIN")// có một trong số các quyền
+								.requestMatchers("/sonic/amdin/**").hasRole("ADMIN")// chỉ có quyền admin mơi được thực
+																					// hiện
 
-		// Khi người dùng đã login, với vai trò XX.
-		// Nhưng truy cập vào trang yêu cầu vai trò YY,
-		// Ngoại lệ AccessDeniedException sẽ ném ra.
-	//		.exceptionHandling(t -> t.accessDeniedPage("/403"))
+								.anyRequest().permitAll())
+//				.oauth2Login(Customizer.withDefaults()).formLogin(Customizer.withDefaults())
+				.logout(l -> l.disable())
 
-		// Cấu hình cho Login Form.
+				// Khi người dùng đã login, với vai trò XX.
+				// Nhưng truy cập vào trang yêu cầu vai trò YY,
+				// Ngoại lệ AccessDeniedException sẽ ném ra.
+				// .exceptionHandling(t -> t.accessDeniedPage("/403"))
+
+				// Cấu hình cho Login Form.
 //			.formLogin(t -> t.loginProcessingUrl("/j_spring_security_check") // Submit URL
 //					.loginPage("/DangNhap")//
 //					.defaultSuccessUrl("/")//
@@ -143,10 +147,10 @@ public class SecurityConfig {
 //					.usernameParameter("tenDangNhap")//
 //					.passwordParameter("matKhau"))
 
-		// Cấu hình cho Logout Page.
+				// Cấu hình cho Logout Page.
 //			.logout(t -> t.logoutUrl("/api/"))
 
-		// Cấu hình Remember Me.
+				// Cấu hình Remember Me.
 
 //			.rememberMe(t -> t.tokenRepository(this.persistentTokenRepository())
 //				.tokenValiditySeconds(1*24*60*60))//24h

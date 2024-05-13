@@ -1,33 +1,33 @@
 import { useState } from "react";
+import * as loginServices from "../../apiServices/loginservices";
 import "./Main.css";
-// import * as loginServices from  '../../apiServices/loginservices';
-import axios from '../../apiServices/loginservices'; // Import cấu hình Axios đã tạo
 function Main() {
-
-  
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   // console.log({
   //   username,
   //   password
   // })
 
-  const handleSubmit=()=>{
-    axios.post('/security/login', {
-      username: username,
-      password: password
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  const handleSubmit = () => {
+    // axios.post('/security/login', {
+    //   username: username,
+    //   password: password
+    // })
+    // .then(function (response) {
+    //   console.log(response.data);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
 
-
-
-  }
+    loginServices
+      .login(username, password)
+      .then((viet) => {
+        console.log(viet);
+      })
+  };
 
   return (
     <main className="m-3">

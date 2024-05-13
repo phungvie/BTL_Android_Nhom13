@@ -33,10 +33,12 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping("/vnpay")
 @AllArgsConstructor
 public class VnpayController {
