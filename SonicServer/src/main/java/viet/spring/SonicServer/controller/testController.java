@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class testController {
 	@GetMapping("/")
-	public String viet(String code) {
-		return code;
+	public String viet(String code,String token) {
+		return code +"  "+token;
 	}
 
 }

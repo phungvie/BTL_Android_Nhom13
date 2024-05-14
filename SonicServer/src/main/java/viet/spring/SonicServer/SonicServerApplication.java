@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.common.collect.Lists;
 
@@ -38,8 +39,6 @@ public class SonicServerApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SonicServerApplication.class, args);
-//		System.out.println(Config.getRandomNumber(8));
-
 	}
 
 	@Override

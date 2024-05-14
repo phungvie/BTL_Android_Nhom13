@@ -3,7 +3,7 @@ import config from '../config';
 
 
 const request = axios.create({
-    baseURL: config.baseURL,
+    baseURL: config.baseURLGitHub,
 });
 export const get = async (path, options={})=>{
     const response = await request.get(path,options);

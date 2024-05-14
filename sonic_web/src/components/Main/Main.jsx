@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as loginServices from "../../apiServices/loginservices";
+import config from '../../config';
 import "./Main.css";
 function Main() {
   const [username, setUsername] = useState("");
@@ -11,22 +12,19 @@ function Main() {
   // })
 
   const handleSubmit = () => {
-    // axios.post('/security/login', {
-    //   username: username,
-    //   password: password
-    // })
-    // .then(function (response) {
-    //   console.log(response.data);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
 
     loginServices
       .login(username, password)
       .then((viet) => {
         console.log(viet);
       })
+  };
+  
+  const viet = () => {
+
+      window.location.href = 'https://github.com/login/oauth/authorize?client_id='+config.clientId+'&redirect_uri='+config.redirectUri+'&scope='+config.scope;
+
+   
   };
 
   return (
@@ -91,7 +89,7 @@ function Main() {
             <img src="https://i.pinimg.com/originals/84/c7/00/84c7007eb6ac4374f77394d1e4954a96.png" />{" "}
             Đăng nhập bằng Google
           </button>
-          <button className=" btn-custom btn btn-outline-secondary m-3">
+          <button className=" btn-custom btn btn-outline-secondary m-3" onClick={viet}>
             <img
               src="https://static-00.iconduck.com/assets.00/github-light-icon-2048x1998-m3c0rgap.png"
               alt=""

@@ -34,7 +34,7 @@ import viet.spring.SonicServer.config.UserImplUserDetails;
 import viet.spring.SonicServer.entity.Role;
 import viet.spring.SonicServer.entity.User;
 import viet.spring.SonicServer.payload.LoginRequest;
-import viet.spring.SonicServer.payload.LoginResponse;
+import viet.spring.SonicServer.payload.accessToken;
 import viet.spring.SonicServer.repository.RoleRepository;
 import viet.spring.SonicServer.repository.UserRepository;
 import viet.spring.SonicServer.jwt.JwtTokenProvider;
@@ -59,7 +59,7 @@ public class securityController {
 	UserRepository userR;
 
 	@PostMapping("/login")
-	public LoginResponse authenticateUser(@RequestBody LoginRequest loginRequest) {
+	public accessToken authenticateUser(@RequestBody LoginRequest loginRequest) {
 
 		// Xác thực từ username và password.
 		Authentication authentication = authenticationManager.authenticate(
@@ -73,7 +73,7 @@ public class securityController {
 		UserImplUserDetails viet = new UserImplUserDetails(authentication.getName(), loginRequest.getPassword(),
 				(Collection<GrantedAuthority>) authentication.getAuthorities());
 		String jwt = tokenProvider.generateToken(viet);
-		return new LoginResponse(jwt);
+		return new accessToken(jwt);
 
 	}
 	

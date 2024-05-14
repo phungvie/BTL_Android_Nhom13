@@ -8,7 +8,9 @@ package viet.spring.SonicServer.payload;
  *    Xin cảm ơn!
  *******************************************************/
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Copyright 2019 {@author Loda} (https://loda.me).
@@ -18,11 +20,14 @@ import lombok.Data;
  * Github: https://github.com/loda-kun
  */
 @Data
-public class LoginResponse {
-    private String accessToken;
-    private String tokenType = "Bearer ";
+@AllArgsConstructor
+@NoArgsConstructor
+public class accessToken {
+    private String access_token;
+    private String token_type = "Bearer ";
+    private String scope;
 
-    public LoginResponse(String accessToken) {
-        this.accessToken = accessToken;
+    public accessToken(String accessToken) {
+        this.access_token = accessToken;
     }
 }
