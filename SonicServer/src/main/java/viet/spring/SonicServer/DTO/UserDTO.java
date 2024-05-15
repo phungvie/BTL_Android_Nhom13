@@ -3,11 +3,13 @@ package viet.spring.SonicServer.DTO;
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import viet.spring.SonicServer.entity.User;
 
 @Data
 @AllArgsConstructor
+@Builder
 public class UserDTO {
 	
 	

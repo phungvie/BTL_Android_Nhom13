@@ -1,4 +1,4 @@
-package viet.spring.SonicServer.payload;
+package viet.spring.SonicServer.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

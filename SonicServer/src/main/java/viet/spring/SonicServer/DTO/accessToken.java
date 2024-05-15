@@ -1,4 +1,4 @@
-package viet.spring.SonicServer.payload;
+package viet.spring.SonicServer.DTO;
 /*******************************************************
  * For Vietnamese readers:
  *    Các bạn thân mến, mình rất vui nếu project này giúp 

@@ -33,8 +33,8 @@ import viet.spring.SonicServer.DTO.UserDTO;
 import viet.spring.SonicServer.config.UserImplUserDetails;
 import viet.spring.SonicServer.entity.Role;
 import viet.spring.SonicServer.entity.User;
-import viet.spring.SonicServer.payload.LoginRequest;
-import viet.spring.SonicServer.payload.accessToken;
+import viet.spring.SonicServer.DTO.LoginRequest;
+import viet.spring.SonicServer.DTO.accessToken;
 import viet.spring.SonicServer.repository.RoleRepository;
 import viet.spring.SonicServer.repository.UserRepository;
 import viet.spring.SonicServer.jwt.JwtTokenProvider;
@@ -91,7 +91,7 @@ public class securityController {
 	}
 
 	@PostMapping("/signup/user")
-	public ResponseEntity<String> AddUser(@RequestBody UserDTO viet) {
+	public ResponseEntity<String> AddUser(@RequestBody UserDTO viet,String password) {
 		if (viet == null) {
 			return ResponseEntity.badRequest().body("Đối tượng UserDTO là rỗng");
 		} else {
@@ -100,6 +100,7 @@ public class securityController {
 			Role role3 = roleR.findById(3).orElse(null);
 
 			User sonic = new User(viet);
+			sonic.setPassword(password);
 			sonic.setRoles(Lists.newArrayList(role1, role3));
 			userR.save(sonic);
 

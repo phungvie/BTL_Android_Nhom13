@@ -1,4 +1,4 @@
-package viet.spring.SonicServer.payload;
+package viet.spring.SonicServer.DTO;
 
 import viet.spring.SonicServer.DTO.ArtistDTO;
 import viet.spring.SonicServer.DTO.PlaylistDTO;

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import viet.spring.SonicServer.config.Config;
 import viet.spring.SonicServer.entity.Role;
 import viet.spring.SonicServer.entity.User;
-import viet.spring.SonicServer.payload.VietMessage;
+import viet.spring.SonicServer.DTO.VietMessage;
 import viet.spring.SonicServer.repository.ArtistRepository;
 import viet.spring.SonicServer.repository.PlaylistRepository;
 import viet.spring.SonicServer.repository.RoleRepository;
