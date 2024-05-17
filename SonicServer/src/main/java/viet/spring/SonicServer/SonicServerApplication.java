@@ -26,7 +26,7 @@ import viet.spring.SonicServer.repository.PlaylistRepository;
 import viet.spring.SonicServer.repository.RoleRepository;
 import viet.spring.SonicServer.repository.SongRepository;
 import viet.spring.SonicServer.repository.UserRepository;
-
+//hehe
 @SpringBootApplication
 @AllArgsConstructor
 public class SonicServerApplication implements CommandLineRunner {
