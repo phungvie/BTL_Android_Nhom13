@@ -30,17 +30,21 @@ import com.google.common.collect.Lists;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import viet.spring.SonicServer.DTO.UserDTO;
+import viet.spring.SonicServer.DTO.VietMessage;
 import viet.spring.SonicServer.config.UserImplUserDetails;
 import viet.spring.SonicServer.entity.Role;
 import viet.spring.SonicServer.entity.User;
 import viet.spring.SonicServer.DTO.LoginRequest;
 import viet.spring.SonicServer.DTO.accessToken;
+import viet.spring.SonicServer.DTO.userGit;
 import viet.spring.SonicServer.repository.RoleRepository;
 import viet.spring.SonicServer.repository.UserRepository;
 import viet.spring.SonicServer.jwt.JwtTokenProvider;
 import viet.spring.SonicServer.service.UserService;
+import viet.spring.SonicServer.service.gitHubAPIService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/security")
@@ -50,14 +54,15 @@ public class securityController {
 
 	private JwtTokenProvider tokenProvider;
 
-	RoleRepository roleR;
+	private RoleRepository roleR;
 
-	BCryptPasswordEncoder encoder;
+	private BCryptPasswordEncoder encoder;
 
-	UserService userService;
+	private UserService userService;
 
-	UserRepository userR;
-
+	private UserRepository userR;
+	
+	private gitHubAPIService gitHubAPIService;
 	@PostMapping("/login")
 	public accessToken authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -73,8 +78,35 @@ public class securityController {
 		UserImplUserDetails viet = new UserImplUserDetails(authentication.getName(), loginRequest.getPassword(),
 				(Collection<GrantedAuthority>) authentication.getAuthorities());
 		String jwt = tokenProvider.generateToken(viet);
-		return new accessToken(jwt);
+		return new accessToken(jwt,"Bearer ",authentication.getAuthorities().toString());
 
+	}
+	
+
+
+
+
+	@PostMapping("/login_github")
+	public ResponseEntity<?> getTokenC(@RequestParam("code") String code) {
+		accessToken accessToken = gitHubAPIService.getTokenGitHub(code).block();
+		if(accessToken!=null) {
+			userGit userGit = gitHubAPIService.getUserGitHub(accessToken).block();
+			if (userService.findByUsername(userGit.getBio()).isEmpty()) {
+				UserDTO viet = UserDTO.builder().name(userGit.getName()).phone(userGit.getBio()).img(userGit.getAvatarUrl())
+						.build();
+				this.AddUser(viet,encoder.encode("123"));
+				return ResponseEntity.ok().body("đăng kí thành công");
+			}else {
+				accessToken tokenlogin= this.authenticateUser(new LoginRequest(userGit.getBio(),"123"));
+				return ResponseEntity.ok().body(tokenlogin);
+			}
+		}else {
+			return ResponseEntity.badRequest().body(new VietMessage(400, "code github sai"));
+		}
+		
+
+
+		
 	}
 	
 	@GetMapping("/user")

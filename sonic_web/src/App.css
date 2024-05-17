@@ -1,10 +1,26 @@
-header {
-  padding: 1rem;
-}
-header>h1{
-    color: white;
-}
 
+body {
+  background-image: linear-gradient(to bottom, hwb(0 0% 100% / 0.75), #000000);
+  background-repeat: no-repeat;
+  
+}
+body,html{
+  height: 100%;
+}
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+
+}
+main{
+
+}
 
 /* 
 .App {

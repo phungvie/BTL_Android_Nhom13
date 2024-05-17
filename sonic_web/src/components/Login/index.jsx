@@ -1,8 +1,8 @@
 import { useState } from "react";
 import * as loginServices from "../../apiServices/loginservices";
 import config from '../../config';
-import "./Main.css";
-function Main() {
+import "./login.css";
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,10 +21,7 @@ function Main() {
   };
   
   const viet = () => {
-
       window.location.href = 'https://github.com/login/oauth/authorize?client_id='+config.clientId+'&redirect_uri='+config.redirectUri+'&scope='+config.scope;
-
-   
   };
 
   return (
@@ -101,4 +98,4 @@ function Main() {
     </main>
   );
 }
-export default Main;
+export default Login;

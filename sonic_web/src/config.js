@@ -4,7 +4,7 @@ const config = {
     baseURL: 'http://localhost:8081',
     baseURLGitHub: 'https://github.com',
     clientId:'10d927a1f54f8ad02940',
-    redirectUri:'http://localhost:8081/git_hub/get_token',
+    redirectUri:'http://localhost:3000',
     scope:'read:user'
 };
 

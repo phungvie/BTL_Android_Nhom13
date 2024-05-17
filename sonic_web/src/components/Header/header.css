@@ -1,0 +1,6 @@
+header {
+    padding: 1rem;
+  }
+  header>h1{
+      color: white;
+  }
