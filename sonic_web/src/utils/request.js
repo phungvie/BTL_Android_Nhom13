@@ -7,6 +7,7 @@ const request = axios.create({
     // headers: {
     //     'Authorization': 'Bearer your_token_here'
     //   }
+    //hehe
 });
 export const get = async (path, options={})=>{
     const response = await request.get(path,options);
