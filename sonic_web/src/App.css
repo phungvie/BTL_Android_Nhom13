@@ -4,7 +4,7 @@ body {
   background-repeat: no-repeat;
   
 }
-body,html{
+html{
   height: 100%;
 }
 footer {
@@ -12,14 +12,10 @@ footer {
   color: #fff;
   text-align: center;
   padding: 20px 0;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-
 
 }
-main{
-
+a{
+  color: white;
 }
 
 /* 

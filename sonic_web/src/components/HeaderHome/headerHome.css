@@ -1,7 +1,21 @@
-.headerHome {
-  width: 25%;
+.headerHome{
+  width: 22%;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+}
+.headerHome a {
+  text-decoration: none;
+}
+.headerHome ul {
+  list-style: none;
+  padding: 0; /* Xóa khoảng cách mặc định */
+  margin: 0; /* Xóa khoảng cách mặc định */
+}
+
+/* Nếu muốn xóa khoảng cách mặc định giữa các mục li */
+.headerHome li {
+  margin: 0;
+  padding: 0;
 }

@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import * as loginServices from "../../apiServices/loginservices";
-
+import './home.css';
 
 function Home() {
 
@@ -17,8 +17,8 @@ function Home() {
       // window.location.href = 'http://localhost:3000'
   }
   return (
-    <main>
-      <h1 style={{ color: 'white' }}>viet</h1>
+    <main className='homeRight'>
+      <h1>viet</h1>
     </main>);
 }
 

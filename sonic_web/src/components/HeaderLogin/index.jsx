@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import "./header.css";
-function Header() {
+import "./headerLogin.css";
+function HeaderLogin() {
   return (
-    <header className="bg-black clearfix">
-      <Link to="/" className='float-start'><h1>Sonic</h1></Link>
-      <Link to="/login" className='float-end'><h1>Đăng nhập</h1></Link>
+    <header className="bg-black clearfix p-2">
+      <Link to="/" className='float-start text-decoration-none'><h1>Sonic</h1></Link>
+
     </header>
   );
 }
-export default Header;
+export default HeaderLogin;
