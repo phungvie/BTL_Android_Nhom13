@@ -1,21 +1,14 @@
 package viet.spring.SonicServer;
 
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.UUID;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.StringUtils;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import com.google.common.collect.Lists;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import viet.spring.SonicServer.config.Config;
 import viet.spring.SonicServer.entity.Artist;
 import viet.spring.SonicServer.entity.Playlist;
 import viet.spring.SonicServer.entity.Role;
