@@ -12,12 +12,9 @@ function Login() {
   // })
 
   const handleSubmit = () => {
+ console.log(   loginServices
+  .login(username, password));
 
-    loginServices
-      .login(username, password)
-      .then((viet) => {
-        console.log(viet);
-      })
   };
   
   const viet = () => {
