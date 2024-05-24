@@ -15,14 +15,14 @@ public class UserService {
 
 	public Optional<User> findByUsername(String userName) {
 		Optional<User> mail = userR.findByMail(userName);
-		Optional<User> phone = userR.findByPhone(userName);
-		if (mail.isEmpty() && phone.isEmpty()) {
+		Optional<User> phoneNumber = userR.findByPhone(userName);
+		if (mail.isEmpty() && phoneNumber.isEmpty()) {
 			return Optional.empty();
 		} else {
 			if (mail.isPresent()) {
 				return mail;
 			} else {
-				return phone;
+				return phoneNumber;
 			}
 		}
 	}

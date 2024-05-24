@@ -21,6 +21,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,8 +44,12 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Integer userID;
+	@NotBlank(message = "Name is mandatory")
+	@Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
 	private String name;
-	private String phone;
+	private String phoneNumber;
+	@NotBlank(message = "Email is mandatory")
+	@Email(message = "Email should be valid")
 	private String mail;
 	private String password;
 	private Date dateOfBirth;
@@ -50,15 +57,14 @@ public class User {
 	private Timestamp signUpDate;
 	private String country;
 	private String img;
-	
+
 	private Integer followers;
 	private Integer following;
-	
-	
+
 	public User(UserDTO viet) {
 		this.userID = viet.getUserID();
 		this.name = viet.getName();
-		this.phone = viet.getPhone();
+		this.phoneNumber = viet.getPhoneNumber();
 		this.mail = viet.getMail();
 		this.dateOfBirth = viet.getDateOfBirth();
 		this.country = viet.getCountry();
@@ -66,46 +72,31 @@ public class User {
 		this.followers = viet.getFollowers();
 		this.following = viet.getFollowers();
 	}
-	
-	
-	
-	
+
 //    @ElementCollection
 //    @CollectionTable(name = "librar_bottom")
 //    @Column(name = "object")
 //    @JoinTable(name = "list", joinColumns = @JoinColumn(name = "user_id"))
 //    private List<String> objects = new ArrayList<>();
-	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinTable(name = "lib_artist",
-	joinColumns = @JoinColumn(name="user_id"),
-	inverseJoinColumns = @JoinColumn(name="artist_id"),
-	uniqueConstraints = {
-			@UniqueConstraint(columnNames = { "user_id", "artist_id" })
-			}
-	)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "lib_artist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "artist_id"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "user_id", "artist_id" }) })
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private List<Artist> libraryArtist;
-	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinTable(name = "lib_playlist",
-	joinColumns = @JoinColumn(name="user_id"),
-	inverseJoinColumns = @JoinColumn(name="playlist_id"),
-	uniqueConstraints = {
-			@UniqueConstraint(columnNames = { "user_id", "playlist_id" })
-			}
-	)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "lib_playlist", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "playlist_id"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "user_id", "playlist_id" }) })
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private List<Playlist> libraryPlaylist;
-	
+
 	@ManyToMany(mappedBy = "users")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Song> songs;
-
-
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@EqualsAndHashCode.Exclude
@@ -116,18 +107,12 @@ public class User {
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private List<Comment> comments;
-	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinTable(name = "user_role",
-	joinColumns = @JoinColumn(name="user_id"),
-	inverseJoinColumns = @JoinColumn(name="role_id"),
-	uniqueConstraints = {
-			@UniqueConstraint(columnNames = { "user_id", "role_id" })
-			}
-	)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-	private List<Role> roles;
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = {
+			@UniqueConstraint(columnNames = { "user_id", "role_id" }) })
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private List<Role> roles;
 
 }

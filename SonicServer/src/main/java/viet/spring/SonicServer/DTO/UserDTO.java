@@ -17,7 +17,7 @@ public class UserDTO {
 
 	private Integer userID;
 	private String name;
-	private String phone;
+	private String phoneNumber;
 	private String mail;
 	private Date dateOfBirth;
 	private String country;
@@ -28,7 +28,7 @@ public class UserDTO {
 	public UserDTO(User viet) {
 		this.userID = viet.getUserID();
 		this.name = viet.getName();
-		this.phone = viet.getPhone();
+		this.phoneNumber = viet.getPhoneNumber();
 		this.mail = viet.getMail();
 		this.dateOfBirth = viet.getDateOfBirth();
 		this.country = viet.getCountry();
