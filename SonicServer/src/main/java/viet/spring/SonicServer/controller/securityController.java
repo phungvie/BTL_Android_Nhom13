@@ -29,6 +29,7 @@ import com.google.common.collect.Lists;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import viet.spring.SonicServer.DTO.UserDTO;
 import viet.spring.SonicServer.DTO.VietMessage;
 import viet.spring.SonicServer.config.UserImplUserDetails;
@@ -64,7 +65,7 @@ public class securityController {
 	
 	private gitHubAPIService gitHubAPIService;
 	@PostMapping("/login")
-	public accessToken authenticateUser(@RequestBody LoginRequest loginRequest) {
+	public accessToken authenticateUser( @RequestBody LoginRequest loginRequest) {
 
 		// Xác thực từ username và password.
 		Authentication authentication = authenticationManager.authenticate(
@@ -92,7 +93,7 @@ public class securityController {
 		if(accessToken!=null) {
 			userGit userGit = gitHubAPIService.getUserGitHub(accessToken).block();
 			if (userService.findByUsername(userGit.getBio()).isEmpty()) {
-				UserDTO viet = UserDTO.builder().name(userGit.getName()).phone(userGit.getBio()).img(userGit.getAvatarUrl())
+				UserDTO viet = UserDTO.builder().name(userGit.getName()).phoneNumber(userGit.getBio()).img(userGit.getAvatarUrl())
 						.build();
 				this.AddUser(viet,encoder.encode("123"));
 				return ResponseEntity.ok().body("đăng kí thành công");
