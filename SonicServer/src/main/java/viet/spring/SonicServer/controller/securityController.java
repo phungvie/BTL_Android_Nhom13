@@ -82,19 +82,19 @@ public class securityController {
 		// Trả về jwt cho người dùng.
 		UserImplUserDetails viet = new UserImplUserDetails(authentication.getName(), loginRequest.getPassword(),
 				(Collection<GrantedAuthority>) authentication.getAuthorities());
-		String jwt = tokenProvider.generateToken(viet);
+		String token = tokenProvider.generateToken(viet);
 
-		Cookie cookie = new Cookie("Authorization", "Bearer_" + jwt);
+		Cookie cookie = new Cookie("Authorization", "Bearer_"+token );
 		  // Set các thuộc tính cho cookie
         cookie.setMaxAge(3600); // Thời gian sống của cookie (đơn vị: giây)
         cookie.setPath("/"); // Đường dẫn của cookie
-        cookie.setDomain(""); // Domain của cookie (localhost)
+        cookie.setDomain("localhost"); // Domain của cookie (localhost)
         cookie.setSecure(false); // Đánh dấu cookie chỉ được truy cập qua giao thức HTTPS hay không
         cookie.setHttpOnly(true); // Chỉ cho phép truy cập qua HTTP, không cho phép qua JavaScript
         // Gắn cookie vào response
 		response.addCookie(cookie);
 
-		return new accessToken(jwt, "Bearer ", authentication.getAuthorities().toString());
+		return new accessToken(token, "Bearer ", authentication.getAuthorities().toString());
 
 	}
 
