@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Lists;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import viet.spring.SonicServer.DTO.UserDTO;
@@ -46,6 +48,7 @@ import viet.spring.SonicServer.service.gitHubAPIService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/security")
@@ -62,16 +65,17 @@ public class securityController {
 	private UserService userService;
 
 	private UserRepository userR;
-	
+
 	private gitHubAPIService gitHubAPIService;
+
 	@PostMapping("/login")
-	public accessToken authenticateUser( @RequestBody LoginRequest loginRequest) {
+	public accessToken authenticateUser(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
 		// Xác thực từ username và password.
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername().trim(), loginRequest.getPassword()));
 		// Nếu không xảy ra exception tức là thông tin hợp lệ
-		
+
 		// Set thông tin authentication vào Security Context
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -79,42 +83,45 @@ public class securityController {
 		UserImplUserDetails viet = new UserImplUserDetails(authentication.getName(), loginRequest.getPassword(),
 				(Collection<GrantedAuthority>) authentication.getAuthorities());
 		String jwt = tokenProvider.generateToken(viet);
-		return new accessToken(jwt,"Bearer ",authentication.getAuthorities().toString());
+
+		Cookie cookie = new Cookie("Authorization", "Bearer_" + jwt);
+		  // Set các thuộc tính cho cookie
+        cookie.setMaxAge(3600); // Thời gian sống của cookie (đơn vị: giây)
+        cookie.setPath("/"); // Đường dẫn của cookie
+        cookie.setDomain(""); // Domain của cookie (localhost)
+        cookie.setSecure(false); // Đánh dấu cookie chỉ được truy cập qua giao thức HTTPS hay không
+        cookie.setHttpOnly(true); // Chỉ cho phép truy cập qua HTTP, không cho phép qua JavaScript
+        // Gắn cookie vào response
+		response.addCookie(cookie);
+
+		return new accessToken(jwt, "Bearer ", authentication.getAuthorities().toString());
 
 	}
-	
-
-
-
 
 	@PostMapping("/login_github")
-	public ResponseEntity<?> getTokenC(@RequestParam("code") String code) {
+	public ResponseEntity<?> getTokenC(@RequestParam("code") String code, HttpServletResponse response) {
 		accessToken accessToken = gitHubAPIService.getTokenGitHub(code).block();
-		if(accessToken!=null) {
+		if (accessToken != null) {
 			userGit userGit = gitHubAPIService.getUserGitHub(accessToken).block();
 			if (userService.findByUsername(userGit.getBio()).isEmpty()) {
-				UserDTO viet = UserDTO.builder().name(userGit.getName()).phoneNumber(userGit.getBio()).img(userGit.getAvatarUrl())
-						.build();
-				this.AddUser(viet,encoder.encode("123"));
+				UserDTO viet = UserDTO.builder().name(userGit.getName()).phoneNumber(userGit.getBio())
+						.img(userGit.getAvatarUrl()).build();
+				this.AddUser(viet, encoder.encode("123"));
 				return ResponseEntity.ok().body("đăng kí thành công");
-			}else {
-				accessToken tokenlogin= this.authenticateUser(new LoginRequest(userGit.getBio(),"123"));
+			} else {
+				accessToken tokenlogin = this.authenticateUser(new LoginRequest(userGit.getBio(), "123"), response);
 				return ResponseEntity.ok().body(tokenlogin);
 			}
-		}else {
+		} else {
 			return ResponseEntity.badRequest().body(new VietMessage(400, "code github sai"));
 		}
-		
 
-
-		
 	}
-	
+
 	@GetMapping("/user")
 	public ResponseEntity<?> user(@AuthenticationPrincipal OAuth2User principal) {
-		return ResponseEntity.ok().body( Collections.singletonMap("name", principal.getAttribute("name")));
+		return ResponseEntity.ok().body(Collections.singletonMap("name", principal.getAttribute("name")));
 	}
-
 
 	@GetMapping("/getUser")
 	public UserDTO getUser(Principal viet) {
@@ -124,7 +131,7 @@ public class securityController {
 	}
 
 	@PostMapping("/signup/user")
-	public ResponseEntity<String> AddUser(@RequestBody UserDTO viet,String password) {
+	public ResponseEntity<String> AddUser(@RequestBody UserDTO viet, String password) {
 		if (viet == null) {
 			return ResponseEntity.badRequest().body("Đối tượng UserDTO là rỗng");
 		} else {
@@ -160,7 +167,5 @@ public class securityController {
 
 		}
 	}
-	
-
 
 }

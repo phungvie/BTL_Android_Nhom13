@@ -15,7 +15,7 @@ public class UserService {
 
 	public Optional<User> findByUsername(String userName) {
 		Optional<User> mail = userR.findByMail(userName);
-		Optional<User> phoneNumber = userR.findByPhone(userName);
+		Optional<User> phoneNumber = userR.findByPhoneNumber(userName);
 		if (mail.isEmpty() && phoneNumber.isEmpty()) {
 			return Optional.empty();
 		} else {
