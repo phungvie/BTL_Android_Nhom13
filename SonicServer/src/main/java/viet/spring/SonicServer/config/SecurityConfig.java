@@ -127,17 +127,18 @@ public class SecurityConfig {
 //		.csrf(c -> c
 //				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //			)
-				.csrf(t -> t.disable()).cors(Customizer.withDefaults())
+//				.cors(Customizer.withDefaults())
+				.cors(cors -> cors.disable())
+				.csrf(t -> t.disable())
 				.authorizeHttpRequests(
 						authorize -> authorize.requestMatchers("/sonic/lib/**", "/security/getUser", "/sonic/user/**")
 								.hasAnyRole("USER", "ADMIN")// có một trong số các quyền
 								.requestMatchers("/sonic/amdin/**").hasRole("ADMIN")// chỉ có quyền admin mơi được thực
 																					// hiện
-
 								.anyRequest().permitAll())
 //				.oauth2Login(Customizer.withDefaults()).formLogin(Customizer.withDefaults())
 				.logout(l -> l.disable())
-
+				.httpBasic(Customizer.withDefaults())
 				// Khi người dùng đã login, với vai trò XX.
 				// Nhưng truy cập vào trang yêu cầu vai trò YY,
 				// Ngoại lệ AccessDeniedException sẽ ném ra.
@@ -159,6 +160,7 @@ public class SecurityConfig {
 //			.rememberMe(t -> t.tokenRepository(this.persistentTokenRepository())
 //				.tokenValiditySeconds(1*24*60*60))//24h
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		
 
 		return http.build();
 	}
@@ -169,5 +171,20 @@ public class SecurityConfig {
 //		db.setDataSource(dataSource);
 //		return db;
 //	}
+	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+//		configuration.setAllowCredentials(true);
+		configuration.setAllowedHeaders(List.of("Authorization"));
+//		configuration    .setAllowedHeaders(Arrays.asList("*"));
+//		configuration.setExposedHeaders(Arrays.asList("Authorization Content-Type"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		
+		return source;
+	}
 
 }
